@@ -6,6 +6,8 @@ class ntp::service inherits ntp {
   }
 
   if $service_manage == true {
+    $use_servers = join($servers, " ")
+    exec {"/usr/sbin/ntpdate -s -u ${use_servers}":} ->
     service { 'ntp':
       ensure     => $service_ensure,
       enable     => $service_enable,
